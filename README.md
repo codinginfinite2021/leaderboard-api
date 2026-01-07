@@ -1,4 +1,4 @@
-# 🌍 Leaderboard API - Docs & Demo
+🌍 Leaderboard API - Docs & Demo
 
 This API allows you to:
 
@@ -42,6 +42,15 @@ POST /player
   "country": "India",
   "emoji": "🇮🇳"
 }
+
+Response:
+{
+  "player_id": "player-xyz",
+  "message": "New player created or info updated"
+}
+3️⃣ Submit Score
+json
+Copy code
 POST /score
 {
   "player_id": "player-xyz",
@@ -54,6 +63,9 @@ Response:
   "success": true,
   "message": "Score added or updated"
 }
+4️⃣ Get Leaderboard
+json
+Copy code
 GET /leaderboard/PASTE_YOUR_GAME_ID
 
 Response:
@@ -61,6 +73,9 @@ Response:
   { "name": "Rahul", "country": "India", "emoji": "🇮🇳", "score": 18 },
   { "name": "Amit", "country": "USA", "emoji": "🇺🇸", "score": 15 }
 ]
+5️⃣ JS Example: Website Integration
+javascript
+Copy code
 const API = "https://leaderboard-api-24cj.onrender.com"; // Your API URL
 const GAME_ID = "PASTE_YOUR_GAME_ID";
 
@@ -86,6 +101,22 @@ fetch(API + "/player", {
     .then(r => r.json())
     .then(data => console.log(data));
 });
+6️⃣ Demo Game (Click Speed Game)
+Enter your name
+
+Click the button as many times as you can in 5 seconds
+
+Score auto sends to API
+
+Leaderboard updates live
+
+Works on web and mobile
+
+Country is detected automatically via IP
+
+Made with ❤️ by @codinginfinite
+yaml
+Copy code
 
 ---
 
@@ -100,13 +131,4 @@ fetch(API + "/player", {
 
 ---
 
-Agar chaho, main is README me **direct clickable links + live code snippet demo** bhi add kar du jisse koi GitHub page open karke **immediately test kar sake**.  
 
-Kya mai wo enhanced version bana du?
-
-
-Response:
-{
-  "player_id": "player-xyz",
-  "message": "New player created or info updated"
-}
