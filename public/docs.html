@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Global Leaderboard API</title>
+
+<style>
+:root{
+  --bg:#0f172a;
+  --card:#111827;
+  --accent:#38bdf8;
+  --text:#e5e7eb;
+  --muted:#9ca3af;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:system-ui,-apple-system,Segoe UI,Roboto;
+  background:linear-gradient(120deg,#020617,#020617,#020617);
+  color:var(--text);
+}
+header{
+  padding:60px 20px;
+  text-align:center;
+}
+header h1{
+  font-size:2.5rem;
+  color:var(--accent);
+}
+header p{
+  max-width:700px;
+  margin:auto;
+  color:var(--muted);
+  font-size:1.05rem;
+}
+
+.container{
+  max-width:1100px;
+  margin:auto;
+  padding:20px;
+  display:grid;
+  gap:20px;
+}
+
+.card{
+  background:var(--card);
+  border-radius:14px;
+  padding:22px;
+  box-shadow:0 0 0 1px #1f2937;
+}
+
+.card h2{
+  margin-top:0;
+  color:var(--accent);
+}
+
+code,pre{
+  background:#020617;
+  padding:14px;
+  border-radius:10px;
+  display:block;
+  overflow:auto;
+  color:#a5f3fc;
+  font-size:0.9rem;
+}
+
+.step{
+  display:flex;
+  gap:10px;
+  margin-bottom:10px;
+}
+.step span{
+  background:var(--accent);
+  color:#020617;
+  border-radius:50%;
+  width:26px;
+  height:26px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:bold;
+}
+
+.badge{
+  display:inline-block;
+  background:#020617;
+  border:1px solid #1f2937;
+  padding:6px 10px;
+  border-radius:999px;
+  font-size:0.8rem;
+  color:var(--muted);
+}
+
+footer{
+  text-align:center;
+  padding:30px 10px;
+  color:var(--muted);
+  font-size:0.9rem;
+}
+footer span{
+  color:var(--accent);
+}
+
+@media(max-width:768px){
+  header h1{font-size:2rem}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>🌍 Global Leaderboard API</h1>
+  <p>
+    A simple & free leaderboard API for games.<br>
+    Automatically detects player country, saves score, and returns rank with country flag.
+  </p>
+  <span class="badge">FREE • Multi-Game • Easy Integration</span>
+</header>
+
+<div class="container">
+
+<!-- INTRO -->
+<div class="card">
+<h2>✨ What this API does</h2>
+<ul>
+<li>Detects player country automatically 🌍</li>
+<li>Accepts player name 👤</li>
+<li>Saves score after game ends 🎮</li>
+<li>Returns leaderboard with rank 🏆</li>
+<li>Works for Website & Mobile Apps 📱</li>
+</ul>
+</div>
+
+<!-- FLOW -->
+<div class="card">
+<h2>🔄 How it works (Simple Flow)</h2>
+
+<div class="step"><span>1</span> Player opens your game</div>
+<div class="step"><span>2</span> Country detected using IP</div>
+<div class="step"><span>3</span> Player enters name</div>
+<div class="step"><span>4</span> Game finishes → score sent</div>
+<div class="step"><span>5</span> API returns rank & leaderboard</div>
+</div>
+
+<!-- STEP 1 -->
+<div class="card">
+<h2>🎮 Step 1: Create your Game</h2>
+<p>Call this once to generate a <b>GAME_ID</b></p>
+
+<pre>POST /game
+Content-Type: application/json
+
+{
+  "name": "My Awesome Game"
+}</pre>
+
+<p><b>Response:</b></p>
+<pre>{
+  "game_id": "abcd-1234"
+}</pre>
+</div>
+
+<!-- STEP 2 -->
+<div class="card">
+<h2>👤 Step 2: Register Player</h2>
+<p>Country & emoji are fetched automatically on frontend.</p>
+
+<pre>POST /player
+Content-Type: application/json
+
+{
+  "name": "Rahul",
+  "country": "India",
+  "emoji": "🇮🇳"
+}</pre>
+
+<p><b>Response:</b></p>
+<pre>{
+  "player_id": "player-xyz"
+}</pre>
+</div>
+
+<!-- STEP 3 -->
+<div class="card">
+<h2>🔥 Step 3: Submit Score</h2>
+
+<pre>POST /score
+Content-Type: application/json
+
+{
+  "player_id": "player-xyz",
+  "game_id": "abcd-1234",
+  "score": 950
+}</pre>
+</div>
+
+<!-- STEP 4 -->
+<div class="card">
+<h2>🏆 Step 4: Fetch Leaderboard</h2>
+
+<pre>GET /leaderboard/abcd-1234</pre>
+
+<p><b>Response:</b></p>
+<pre>[
+  {
+    "name": "Rahul",
+    "country": "India",
+    "emoji": "🇮🇳",
+    "score": 950
+  }
+]</pre>
+</div>
+
+<!-- WEBSITE -->
+<div class="card">
+<h2>🌐 Use in Website (JavaScript)</h2>
+
+<pre>
+const API = "https://your-app.onrender.com";
+
+fetch(API + "/leaderboard/GAME_ID")
+  .then(res => res.json())
+  .then(data => {
+    data.forEach((p,i)=>{
+      console.log(
+        `#${i+1} ${p.emoji} ${p.name} - ${p.score}`
+      );
+    });
+  });
+</pre>
+</div>
+
+<!-- APP -->
+<div class="card">
+<h2>📱 Use in Mobile App</h2>
+<p>This API works perfectly with:</p>
+<ul>
+<li>Android (WebView / JS / Unity)</li>
+<li>Flutter</li>
+<li>React Native</li>
+<li>Unity Web Request</li>
+</ul>
+<p>Just make HTTP requests.</p>
+</div>
+
+<!-- COUNTRY -->
+<div class="card">
+<h2>🌍 Country Auto Detection</h2>
+
+<p>Use this FREE service on frontend:</p>
+
+<pre>https://ipapi.co/json/</pre>
+
+<p>
+Country emoji is generated from country code automatically.
+No API key required.
+</p>
+</div>
+
+<!-- SECURITY -->
+<div class="card">
+<h2>🛡️ Basic Safety</h2>
+<ul>
+<li>No email or personal data stored</li>
+<li>No GPS tracking</li>
+<li>Score controlled by game logic</li>
+<li>Safe for international users</li>
+</ul>
+</div>
+
+</div>
+
+<footer>
+  Made with ❤️ by <span>@codinginfinite</span><br>
+  Free Global Leaderboard API
+</footer>
+
+</body>
+</html>
