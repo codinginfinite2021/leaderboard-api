@@ -5,11 +5,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Leaderboard API Docs + Demo</title>
 <style>
+  @import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
 body{
   margin:0; padding:0;
   font-family: Arial, sans-serif;
   background: linear-gradient(135deg,#0f172a,#111827);
   color:#fff;
+  font-family: "Raleway", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: <weight>;
+  font-style: normal;
 }
 header{
   text-align:center; padding:40px 20px;
@@ -39,6 +44,11 @@ input, button{
   border:none;
   font-size:16px;
 }
+  #yt{ color:black;
+      font-size:10px;
+      background-color:white; 
+      padding:4px;
+  }
 button{background:#22c55e;color:#000;font-weight:bold;cursor:pointer;}
 #clickBtn{background:#facc15; display:none;}
 ul{padding-left:0; margin-top:10px;}
@@ -183,7 +193,7 @@ fetch(API + "/player", {
 </div>
 
 <div class="footer">
-  <a href="https://www.youtube.com/@CodingInfinite">subscribe on yt @codinginfinite</a>
+  <a id="yt" href="https://www.youtube.com/@CodingInfinite">subscribe on yt @codinginfinite</a>
 
 </div>
 </div>
