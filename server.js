@@ -36,12 +36,14 @@ function countryCodeToEmoji(code) {
   );
 }
 
-// ---------- AUTO COUNTRY ----------
+// ---------- AUTO COUNTRY DETECTION ----------
 async function detectCountry(req) {
   try {
+    // Try to get public IP from headers (Render sets x-forwarded-for)
     const ip =
       req.headers["x-forwarded-for"]?.split(",")[0] ||
-      req.socket.remoteAddress;
+      req.socket.remoteAddress ||
+      "8.8.8.8"; // fallback for local testing
 
     const res = await fetch(`https://ipapi.co/${ip}/json/`);
     const data = await res.json();
