@@ -1,15 +1,15 @@
 {
   "name": "leaderboard-api",
   "version": "1.0.0",
-  "description": "Simple Leaderboard API with auto country detection",
+  "description": "Global Leaderboard API with Country & Flag",
   "main": "server.js",
-  "type": "module",
   "scripts": {
     "start": "node server.js"
   },
   "dependencies": {
     "cors": "^2.8.5",
-    "express": "^4.19.2",
-    "geoip-lite": "^1.4.10"
+    "express": "^4.18.2",
+    "sqlite3": "^5.1.7",
+    "node-fetch": "^3.3.2"
   }
 }
