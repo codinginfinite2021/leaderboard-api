@@ -5,8 +5,6 @@
 const express = require("express");
 const sqlite3 = require("sqlite3").verbose();
 const cors = require("cors");
-
-// node-fetch (for Node 18+ compatibility)
 const fetch = (...args) =>
   import("node-fetch").then(({ default: fetch }) => fetch(...args));
 
@@ -20,7 +18,6 @@ app.use(express.json());
 // ---------- DATABASE ----------
 const db = new sqlite3.Database("./leaderboard.db");
 
-// Create table (runs only once)
 db.run(`
   CREATE TABLE IF NOT EXISTS leaderboard (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -31,20 +28,17 @@ db.run(`
   )
 `);
 
-// ---------- COUNTRY CODE → EMOJI ----------
+// ---------- COUNTRY → FLAG ----------
 function countryCodeToEmoji(code) {
   if (!code || code.length !== 2) return "";
-  return code
-    .toUpperCase()
-    .replace(/./g, c =>
-      String.fromCodePoint(127397 + c.charCodeAt())
-    );
+  return code.toUpperCase().replace(/./g, c =>
+    String.fromCodePoint(127397 + c.charCodeAt())
+  );
 }
 
-// ---------- AUTO COUNTRY DETECTION ----------
+// ---------- AUTO COUNTRY ----------
 async function detectCountry(req) {
   try {
-    // Render / Proxy safe IP
     const ip =
       req.headers["x-forwarded-for"]?.split(",")[0] ||
       req.socket.remoteAddress;
@@ -56,9 +50,8 @@ async function detectCountry(req) {
     const code = data.country_code || "";
 
     const flag = countryCodeToEmoji(code);
-
     return { country, flag };
-  } catch (err) {
+  } catch {
     return { country: "Unknown", flag: "" };
   }
 }
@@ -66,61 +59,34 @@ async function detectCountry(req) {
 // ---------- REGISTER / UPDATE SCORE ----------
 app.post("/register", async (req, res) => {
   const { username, score } = req.body;
-
-  if (!username || score === undefined) {
-    return res.status(400).json({
-      error: "username and score required"
-    });
-  }
+  if (!username || score === undefined)
+    return res.status(400).json({ error: "username & score required" });
 
   const { country, flag } = await detectCountry(req);
 
   db.get(
-    `SELECT score FROM leaderboard WHERE username = ?`,
+    "SELECT score FROM leaderboard WHERE username = ?",
     [username],
     (err, row) => {
-      if (err) {
-        return res.status(500).json({ error: err.message });
-      }
+      if (err) return res.status(500).json({ error: err.message });
 
-      // New user
       if (!row) {
+        // New player
         db.run(
-          `INSERT INTO leaderboard (username, score, country, flag)
-           VALUES (?, ?, ?, ?)`,
+          "INSERT INTO leaderboard (username, score, country, flag) VALUES (?, ?, ?, ?)",
           [username, score, country, flag],
-          () => {
-            res.json({
-              message: "New player registered",
-              username,
-              score,
-              country,
-              flag
-            });
-          }
+          () => res.json({ message: "New player", username, score, country, flag })
         );
-      }
-      // Existing user → keep MAX score only
-      else if (score > row.score) {
+      } else if (score > row.score) {
+        // Update max score
         db.run(
-          `UPDATE leaderboard SET score = ? WHERE username = ?`,
+          "UPDATE leaderboard SET score = ? WHERE username = ?",
           [score, username],
-          () => {
-            res.json({
-              message: "Score updated (max score kept)",
-              username,
-              score
-            });
-          }
+          () => res.json({ message: "Score updated (max kept)", username, score })
         );
-      }
-      // Lower score → ignore
-      else {
-        res.json({
-          message: "Score ignored (lower than max score)",
-          username,
-          maxScore: row.score
-        });
+      } else {
+        // Ignore lower score
+        res.json({ message: "Score ignored (lower than max)", username, maxScore: row.score });
       }
     }
   );
@@ -129,14 +95,10 @@ app.post("/register", async (req, res) => {
 // ---------- GET LEADERBOARD ----------
 app.get("/leaderboard", (req, res) => {
   db.all(
-    `SELECT username, score, country, flag
-     FROM leaderboard
-     ORDER BY score DESC`,
+    "SELECT username, score, country, flag FROM leaderboard ORDER BY score DESC",
     [],
     (err, rows) => {
-      if (err) {
-        return res.status(500).json({ error: err.message });
-      }
+      if (err) return res.status(500).json({ error: err.message });
       res.json(rows);
     }
   );
@@ -148,6 +110,4 @@ app.get("/", (req, res) => {
 });
 
 // ---------- START SERVER ----------
-app.listen(PORT, () => {
-  console.log(`✅ Server running on port ${PORT}`);
-});
+app.listen(PORT, () => console.log(`✅ Server running on port ${PORT}`));
