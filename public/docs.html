@@ -2,260 +2,297 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<title>Easy Leaderboard API | Coding Infinite</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Leaderboard API Docs + Demo</title>
+
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=JetBrains+Mono&display=swap" rel="stylesheet">
+
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
+:root{
+  --bg:#0f172a;
+  --card:#111827;
+  --accent:#38bdf8;
+  --green:#22c55e;
+}
+*{box-sizing:border-box}
 body{
-  margin:0; padding:0;
-  font-family: Arial, sans-serif;
-  background: linear-gradient(135deg,#0f172a,#111827);
-  color:#fff;
-  font-family: "Raleway", sans-serif;
-  font-optical-sizing: auto;
-  font-weight: <weight>;
-  font-style: normal;
+  margin:0;
+  font-family:'Poppins',sans-serif;
+  background:var(--bg);
+  color:#e5e7eb;
 }
 header{
-  text-align:center; padding:40px 20px;
+  padding:45px 20px;
+  text-align:center;
+  background:linear-gradient(90deg,#2563eb,#9333ea);
 }
-header h1{color:#38bdf8;}
-header p{color:#9ca3af; max-width:700px; margin:auto;}
-.container{max-width:650px;margin:auto;padding:20px;}
+header h1{
+  margin:0;
+  font-size:36px;
+}
+header p{
+  margin:8px 0 0;
+  opacity:.95;
+}
+section{
+  max-width:1100px;
+  margin:auto;
+  padding:30px 20px;
+}
 .card{
-  background:#111827;
-  padding:20px;
-  border-radius:12px;
-  margin:15px 0;
+  background:var(--card);
+  border-radius:18px;
+  padding:26px;
+  margin-bottom:28px;
+  box-shadow:0 18px 40px rgba(0,0,0,.45);
 }
-h2{color:#22c55e;}
-pre, code{
+h2{
+  margin-top:0;
+  color:var(--accent);
+}
+p,li{
+  line-height:1.7;
+}
+pre{
   background:#020617;
-  padding:10px;
-  border-radius:10px;
-  display:block;
+  padding:18px;
+  border-radius:14px;
   overflow:auto;
+  font-family:'JetBrains Mono',monospace;
+  color:#22d3ee;
 }
-input, button{
+code{
+  background:#020617;
+  padding:4px 8px;
+  border-radius:6px;
+  font-family:'JetBrains Mono',monospace;
+}
+input,button{
   width:100%;
-  padding:12px;
-  margin:8px 0;
-  border-radius:10px;
+  padding:14px;
+  margin-top:12px;
+  border-radius:12px;
   border:none;
   font-size:16px;
 }
-  #yt{ color:black;
-      font-size:10px;
-      background-color:white; 
-      padding:4px;
-  }
-button{background:#22c55e;color:#000;font-weight:bold;cursor:pointer;}
-#clickBtn{background:#facc15; display:none;}
-ul{padding-left:0; margin-top:10px;}
-li{list-style:none; background:#111827; margin:5px 0; padding:10px; border-radius:8px; display:flex; justify-content:space-between;}
-.footer{text-align:center; margin-top:20px; opacity:0.7; font-size:12px;}
-@media(max-width:500px){input,button{font-size:14px;}}
+input{
+  background:#020617;
+  color:#fff;
+}
+button{
+  background:var(--green);
+  font-weight:600;
+  cursor:pointer;
+}
+button:hover{opacity:.9}
+table{
+  width:100%;
+  border-collapse:collapse;
+  margin-top:15px;
+}
+th,td{
+  padding:14px;
+  text-align:left;
+}
+th{
+  background:#1e293b;
+}
+tr:nth-child(even){
+  background:#020617;
+}
+footer{
+  margin-top:40px;
+  text-align:center;
+  padding:40px 20px;
+  background:#020617;
+}
+footer a{
+  color:#38bdf8;
+  font-size:18px;
+  font-weight:600;
+  text-decoration:underline;
+}
+.badge{
+  display:inline-block;
+  padding:6px 12px;
+  background:#020617;
+  border-radius:20px;
+  margin:4px 0;
+  font-size:14px;
+}
 </style>
 </head>
+
 <body>
 
 <header>
-<h1>🌍 Leaderboard API Docs + Demo</h1>
-<p>Send player info, submit score, fetch leaderboard, and see live demo with auto country detection. Works on web & mobile!</p>
+  <h1>🌍 Easy Leaderboard API</h1>
+  <p>Free • Beginner Friendly • Works Everywhere</p>
+  <p>Made with ❤️ by <b>Coding Infinite</b></p>
 </header>
 
-<div class="container">
+<section>
 
-<!-- 1. What API does -->
 <div class="card">
-<h2>1️⃣ What this API does</h2>
+<h2>❓ What is this API?</h2>
+<p>
+This is a <b>simple leaderboard API</b> for games and apps.
+You only send <b>username</b> and <b>score</b>.
+</p>
 <ul>
-<li>Register players with name, country, and emoji</li>
-<li>Submit scores for any game</li>
-<li>Get live leaderboard for a game</li>
-<li>Automatically detects user country using IP</li>
-<li>Unique usernames: same name updates info</li>
-<li>Supports multiple games</li>
+<li>🌍 Country auto-detected (server side)</li>
+<li>♻ Same username = score update</li>
+<li>📱 Works with Website & Mobile Apps</li>
+<li>🧑‍💻 Very easy programming</li>
 </ul>
 </div>
 
-<!-- 2. How API works -->
 <div class="card">
-<h2>2️⃣ How API Works</h2>
-<p>Main endpoints:</p>
-<pre>
-POST /game        → Create new game, get GAME_ID
-POST /player      → Register player (name, country, emoji)
-POST /score       → Submit score for player
-GET /leaderboard/:game_id → Get leaderboard for a game
-</pre>
-<p>Flow Example:</p>
-<pre>
-1️⃣ Create game → POST /game → get GAME_ID
-2️⃣ Register player → POST /player
-3️⃣ Submit score → POST /score
-4️⃣ Fetch leaderboard → GET /leaderboard/:game_id
-</pre>
+<h2>⚙️ How this API works (Very Easy)</h2>
+<ol>
+<li>User plays your game</li>
+<li>Game sends <code>username</code> and <code>score</code></li>
+<li>Server automatically:
+  <ul>
+    <li>Detects country</li>
+    <li>Saves or updates user</li>
+  </ul>
+</li>
+<li>You fetch leaderboard and show it anywhere</li>
+</ol>
 </div>
 
-<!-- 3. How to send info -->
 <div class="card">
-<h2>3️⃣ Send Player Info</h2>
-<p>Send player name, country, and emoji. Same name updates info.</p>
-<pre>
-POST /player
-{
-  "name": "Rahul",
-  "country": "India",
-  "emoji": "🇮🇳"
-}
-Response:
-{
-  "player_id": "player-xyz",
-  "message": "New player created or info updated"
-}
-</pre>
+<h2>🌍 Where can you use this API?</h2>
+<div class="badge">HTML / CSS / JS Games</div>
+<div class="badge">React / Next.js</div>
+<div class="badge">Android Apps</div>
+<div class="badge">iOS Apps</div>
+<div class="badge">Unity / Godot</div>
+<p>Anywhere that supports HTTP requests.</p>
 </div>
 
-<!-- 4. How to submit score -->
 <div class="card">
-<h2>4️⃣ Submit Score</h2>
-<pre>
-POST /score
-{
-  "player_id": "player-xyz",
-  "game_id": "PASTE_YOUR_GAME_ID",
-  "score": 18
-}
-Response:
-{
-  "success": true,
-  "message": "Score added or updated"
-}
-</pre>
+<h2>🔗 API Base URL</h2>
+<p>Use this base URL in all requests:</p>
+<pre>https://leaderboard-api-24cj.onrender.com</pre>
 </div>
 
-<!-- 5. Fetch leaderboard -->
 <div class="card">
-<h2>5️⃣ Get Leaderboard</h2>
+<h2>📤 Register / Update Player</h2>
+<p>Send username and score (same username = update).</p>
 <pre>
-GET /leaderboard/PASTE_YOUR_GAME_ID
-
-Response:
-[
-  { "name": "Rahul", "country": "India", "emoji": "🇮🇳", "score": 18 },
-  { "name": "Amit", "country": "USA", "emoji": "🇺🇸", "score": 15 }
-]
-</pre>
-</div>
-
-<!-- 6. JS Example -->
-<div class="card">
-<h2>6️⃣ JS Example: Send info, score, get leaderboard</h2>
-<pre>
-const API = "https://leaderboard-api-24cj.onrender.com"; // Your API URL
-const GAME_ID = "PASTE_YOUR_GAME_ID";
-
-// Register player
-fetch(API + "/player", {
-  method: "POST",
-  headers: {"Content-Type": "application/json"},
-  body: JSON.stringify({name:"Rahul", country:"India", emoji:"🇮🇳"})
+fetch("https://leaderboard-api-24cj.onrender.com/register",{
+  method:"POST",
+  headers:{ "Content-Type":"application/json" },
+  body:JSON.stringify({
+    username:"Player1",
+    score:50
+  })
 })
-.then(r => r.json())
-.then(player => {
-  const playerId = player.player_id;
+.then(r=>r.json())
+.then(data=>console.log(data));
+</pre>
+</div>
 
-  // Submit score
-  fetch(API + "/score", {
-    method:"POST",
-    headers: {"Content-Type":"application/json"},
-    body: JSON.stringify({player_id:playerId, game_id:GAME_ID, score:20})
-  });
-
-  // Get leaderboard
-  fetch(API + "/leaderboard/" + GAME_ID)
-    .then(r => r.json())
-    .then(data => console.log(data));
+<div class="card">
+<h2>📥 Get Leaderboard</h2>
+<pre>
+fetch("https://leaderboard-api-24cj.onrender.com/leaderboard")
+.then(r=>r.json())
+.then(data=>{
+  console.log(data);
 });
 </pre>
 </div>
 
-<!-- 7. Demo Game -->
 <div class="card">
-<h2>7️⃣ Demo Game: Click Speed Game</h2>
-<p>Enter your name, click as many times as you can in 5 seconds. Score is sent automatically.</p>
-<input id="name" placeholder="Enter your name">
-<button id="startBtn">Start Game (5 sec)</button>
-<button id="clickBtn">Click Me!</button>
-
-<ul id="leaderboard"></ul>
+<h2>🔗 Embed Leaderboard (Copy–Paste)</h2>
+<p>You can embed leaderboard on any website:</p>
+<pre>
+&lt;script&gt;
+fetch("https://leaderboard-api-24cj.onrender.com/leaderboard")
+.then(r=&gt;r.json())
+.then(data=&gt;{
+  document.body.innerHTML +=
+    "&lt;pre&gt;"+JSON.stringify(data,null,2)+"&lt;/pre&gt;";
+});
+&lt;/script&gt;
+</pre>
 </div>
 
-<div class="footer">
-  <a id="yt" href="https://www.youtube.com/@CodingInfinite">subscribe on yt @codinginfinite</a>
+<div class="card">
+<h2>🎮 Live Test (Try Now)</h2>
+<input id="u" placeholder="Enter username">
+<input id="s" type="number" placeholder="Enter score">
+<button onclick="sendScore()">Send Score</button>
+<pre id="out"></pre>
+</div>
 
+<div class="card">
+<h2>🏆 Live Leaderboard</h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Username</th>
+<th>Country</th>
+<th>Score</th>
+</tr>
+</thead>
+<tbody id="board"></tbody>
+</table>
 </div>
-</div>
+
+</section>
+
+<footer>
+<p>Made with ❤️ by <b>Coding Infinite</b></p>
+<p>📺 YouTube Channel</p>
+<a href="https://youtube.com/@codinginfinite" target="_blank">
+https://youtube.com/@codinginfinite
+</a>
+</footer>
 
 <script>
-const API = "https://leaderboard-api-24cj.onrender.com"; // Replace with your API URL
-const GAME_ID = "PASTE_YOUR_GAME_ID"; // Replace with your GAME_ID
+const API = "https://leaderboard-api-24cj.onrender.com";
 
-let clicks=0, gameActive=false;
-const nameInput=document.getElementById("name");
-const startBtn=document.getElementById("startBtn");
-const clickBtn=document.getElementById("clickBtn");
-const leaderboard=document.getElementById("leaderboard");
-
-startBtn.onclick=()=>{
-  if(!nameInput.value){ alert("Enter your name!"); return; }
-  clicks=0; gameActive=true; clickBtn.style.display="block"; startBtn.disabled=true;
-  setTimeout(endGame,5000);
-};
-
-clickBtn.onclick=()=>{ if(gameActive) clicks++; }
-
-async function endGame(){
-  gameActive=false; clickBtn.style.display="none"; startBtn.disabled=false;
-  alert(`Time's up! Your score: ${clicks}`);
-
-  // Detect country automatically
-  const geo = await fetch("https://ipapi.co/json/").then(r=>r.json());
-  const emoji = geo.country_code ? geo.country_code.replace(/./g,c=>String.fromCodePoint(127397+c.charCodeAt())) : "🌍";
-
-  // Register/update player
-  const playerId = await fetch(API+"/player", {
+function sendScore(){
+  fetch(API+"/register",{
     method:"POST",
-    headers:{"Content-Type":"application/json"},
-    body: JSON.stringify({name:nameInput.value, country:geo.country_name, emoji})
-  }).then(r=>r.json()).then(d=>d.player_id);
-
-  // Send score
-  await fetch(API+"/score", {
-    method:"POST",
-    headers:{"Content-Type":"application/json"},
-    body: JSON.stringify({player_id:playerId, game_id:GAME_ID, score:clicks})
-  });
-
-  loadLeaderboard();
-}
-
-async function loadLeaderboard(){
-  const data = await fetch(API+"/leaderboard/"+GAME_ID).then(r=>r.json());
-  leaderboard.innerHTML="";
-  data.forEach((p,i)=>{
-    const li=document.createElement("li");
-    li.innerHTML=`<span>#${i+1} ${p.emoji} ${p.name}</span><span>${p.score}</span>`;
-    leaderboard.appendChild(li);
+    headers:{ "Content-Type":"application/json" },
+    body:JSON.stringify({
+      username:u.value,
+      score:Number(s.value)
+    })
+  })
+  .then(r=>r.json())
+  .then(d=>{
+    out.textContent = JSON.stringify(d,null,2);
+    loadBoard();
   });
 }
 
-// Load leaderboard on page load
-loadLeaderboard();
+function loadBoard(){
+  fetch(API+"/leaderboard")
+  .then(r=>r.json())
+  .then(data=>{
+    board.innerHTML="";
+    data.forEach((p,i)=>{
+      board.innerHTML += `
+        <tr>
+          <td>${i+1}</td>
+          <td>${p.username}</td>
+          <td>${p.country}</td>
+          <td>${p.score}</td>
+        </tr>
+      `;
+    });
+  });
+}
+loadBoard();
 </script>
 
 </body>
 </html>
-
-
