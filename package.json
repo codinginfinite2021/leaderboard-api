@@ -1,15 +1,15 @@
 {
-  "name": "easy-leaderboard",
+  "name": "leaderboard-api",
   "version": "1.0.0",
-  "description": "Easy leaderboard with auto country detection",
+  "description": "Simple Leaderboard API with auto country detection",
   "main": "server.js",
+  "type": "module",
   "scripts": {
     "start": "node server.js"
   },
   "dependencies": {
-    "express": "^4.18.2",
     "cors": "^2.8.5",
+    "express": "^4.19.2",
     "geoip-lite": "^1.4.10"
   }
 }
-
