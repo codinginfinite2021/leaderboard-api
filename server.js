@@ -37,21 +37,21 @@ function countryCodeToEmoji(code) {
 }
 
 // ---------- AUTO COUNTRY DETECTION ----------
-async function detectCountry(req) {
+async function detectCountry() {
   try {
-    // Try to get public IP from headers (Render sets x-forwarded-for)
-    const ip =
-      req.headers["x-forwarded-for"]?.split(",")[0] ||
-      req.socket.remoteAddress ||
-      "8.8.8.8"; // fallback for local testing
+    // 1. Get real public IP
+    const ipRes = await fetch("https://api.ipify.org?format=json");
+    const ipData = await ipRes.json();
+    const ip = ipData.ip;
 
+    // 2. Fetch country data
     const res = await fetch(`https://ipapi.co/${ip}/json/`);
     const data = await res.json();
 
     const country = data.country_name || "Unknown";
     const code = data.country_code || "";
-
     const flag = countryCodeToEmoji(code);
+
     return { country, flag };
   } catch {
     return { country: "Unknown", flag: "" };
@@ -64,7 +64,7 @@ app.post("/register", async (req, res) => {
   if (!username || score === undefined)
     return res.status(400).json({ error: "username & score required" });
 
-  const { country, flag } = await detectCountry(req);
+  const { country, flag } = await detectCountry();
 
   db.get(
     "SELECT score FROM leaderboard WHERE username = ?",
@@ -82,13 +82,13 @@ app.post("/register", async (req, res) => {
       } else if (score > row.score) {
         // Update max score
         db.run(
-          "UPDATE leaderboard SET score = ? WHERE username = ?",
-          [score, username],
-          () => res.json({ message: "Score updated (max kept)", username, score })
+          "UPDATE leaderboard SET score = ?, country = ?, flag = ? WHERE username = ?",
+          [score, country, flag, username],
+          () => res.json({ message: "Score updated (max kept)", username, score, country, flag })
         );
       } else {
         // Ignore lower score
-        res.json({ message: "Score ignored (lower than max)", username, maxScore: row.score });
+        res.json({ message: "Score ignored (lower than max)", username, maxScore: row.score, country, flag });
       }
     }
   );
