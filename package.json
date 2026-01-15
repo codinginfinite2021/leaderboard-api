@@ -1,15 +1,16 @@
 {
   "name": "leaderboard-api",
   "version": "1.0.0",
-  "description": "Global Leaderboard API with Country & Flag",
+  "description": "Global leaderboard API with country and emoji",
   "main": "server.js",
+  "type": "module",
   "scripts": {
     "start": "node server.js"
   },
   "dependencies": {
-    "cors": "^2.8.5",
     "express": "^4.18.2",
     "sqlite3": "^5.1.7",
+    "cors": "^2.8.5",
     "node-fetch": "^3.3.2"
   }
 }
